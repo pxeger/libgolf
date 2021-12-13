@@ -306,3 +306,22 @@ def test_combinations():
 
     assert List(generator()).combinations(2)[:2] == ("ab", "ac")
     assert not generator_executed
+
+
+def test_hash():
+    l = List("abc")
+    l2 = List("def")
+    assert hash(l) == hash(l2)
+    h = hash(l)
+    l.exhaust()
+    assert hash(l) == h == hash(l2)
+
+    l = List("abc")
+    l2 = List("def")
+    l.exhaust()
+    l2.exhaust()
+    assert hash(l2) != hash(l)
+
+    l3 = List("abc")
+    l3.exhaust()
+    assert hash(l) == hash(l3)

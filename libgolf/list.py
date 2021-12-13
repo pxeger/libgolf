@@ -33,6 +33,7 @@ class List:
         self.cache = []
         self.finished = False
         self.it = iter(i)
+        self._hash = None
 
     def __iter__(self):
         if self.finished:
@@ -89,6 +90,19 @@ class List:
 
     def __repr__(self):
         return repr(list(self))
+
+    _HASH = 0x4dd3fd4c8ff4e032
+
+    def __hash__(self):
+        # hash must never change over the lifecycle of the object
+        if self._hash is None:
+            if self.finished:
+                self._hash = hash(tuple(self))
+            else:
+                # can't know whether this object will be equal to any other list object using a hash
+                # so just rely on collision resolution by equality where necessary
+                self._hash = self._HASH
+        return self._hash
 
     def __getitem__(self, arg):
         if isinstance(arg, slice):
