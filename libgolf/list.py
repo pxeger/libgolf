@@ -291,6 +291,12 @@ class List:
                 i += max(1, len(pattern))
 
     @_wrap
+    def find(self, pattern):
+        for i, x in enumerate(self):
+            if x == pattern:
+                yield i
+
+    @_wrap
     def replace(self, pattern, replacement, maxcount=-1):
         # fast paths
         if self is pattern:

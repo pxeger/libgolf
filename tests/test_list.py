@@ -199,6 +199,25 @@ def test_find_substrings():
     assert not generator_executed
 
 
+def test_find():
+    assert List("hello").find("l") == (2, 3)
+    assert List("hello").find("x") == ()
+    assert List("hello").find("ll") == ()
+    assert List("").find("a") == ()
+    assert List("").find(()) == ()
+
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        yield from "hello"
+        nonlocal generator_executed
+        generator_executed = True
+
+    assert List(generator()).find("o")[0] == 4
+    assert not generator_executed
+
+
 def test_replace():
     # sanity check that our string comparisons work at all
     assert List("hello") == "hello"
