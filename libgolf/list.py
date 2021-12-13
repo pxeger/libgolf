@@ -289,6 +289,11 @@ class List:
         yield value
 
     @_wrap
+    def prepend(self, value):
+        yield value
+        yield from self
+
+    @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
         pattern = type(self)(pattern)

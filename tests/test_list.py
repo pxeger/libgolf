@@ -224,6 +224,21 @@ def test_append():
     assert not generator_executed
 
 
+def test_prepend():
+    assert List("hello").prepend("¡") == "¡hello"
+
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        yield from "hello"
+        nonlocal generator_executed
+        generator_executed = True
+
+    assert List(generator()).prepend("¡")[:6] == "¡hello"
+    assert not generator_executed
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]
