@@ -218,21 +218,21 @@ def test_find():
     assert not generator_executed
 
 
-def test_replace():
+def test_replace_substrings():
     # sanity check that our string comparisons work at all
     assert List("hello") == "hello"
 
-    assert List("hello").replace("e", "a") == "hallo"
-    assert List("hello").replace("hello", "goodbye") == "goodbye"
-    assert List("hello").replace("goodbye", "welcome") == "hello"
-    assert List("hello").replace("o", "o") == "hello"
-    assert List("hello").replace("l", "y") == "heyyo"
-    assert List("abbccbbdddbbb").replace("bb", "xyz") == "axyzccxyzdddxyzb"
-    assert List("abaaaaa").replace("aa", "q") == "abqqa"
-    assert List("abaaaaa").replace("aa", "") == "aba"
-    assert List("hellllo").replace("l", "y", maxcount=2) == "heyyllo"
+    assert List("hello").replace_substrings("e", "a") == "hallo"
+    assert List("hello").replace_substrings("hello", "goodbye") == "goodbye"
+    assert List("hello").replace_substrings("goodbye", "welcome") == "hello"
+    assert List("hello").replace_substrings("o", "o") == "hello"
+    assert List("hello").replace_substrings("l", "y") == "heyyo"
+    assert List("abbccbbdddbbb").replace_substrings("bb", "xyz") == "axyzccxyzdddxyzb"
+    assert List("abaaaaa").replace_substrings("aa", "q") == "abqqa"
+    assert List("abaaaaa").replace_substrings("aa", "") == "aba"
+    assert List("hellllo").replace_substrings("l", "y", maxcount=2) == "heyyllo"
     # although I used strings for ease of readability, this should work with any type
-    assert List(range(6)).replace((3, 4), ("hi",)) == (0, 1, 2, "hi", 5)
+    assert List(range(6)).replace_substrings((3, 4), ("hi",)) == (0, 1, 2, "hi", 5)
 
     # ensure lazy
     generator_executed = False
@@ -242,17 +242,17 @@ def test_replace():
         nonlocal generator_executed
         generator_executed = True
 
-    assert "".join(islice(List(generator()).replace("l", "y"), 3)) == "hey"
+    assert "".join(islice(List(generator()).replace_substrings("l", "y"), 3)) == "hey"
     assert not generator_executed
 
 
-def test_replace_instances():
-    assert List("hello").replace_instances("e", "a") == "hallo"
-    assert List("hello").replace_instances("l", "y") == "heyyo"
-    assert List("hello").replace_instances("el", "q") == "hello"
-    assert List("").replace_instances("el", "q") == ""
-    assert List.nones().replace_instances(None, "a")[:10] == ["a"] * 10
-    assert List.nones().replace_instances(None, "a", maxcount=3)[:10] == ["a"] * 3 + [None] * 7
+def test_replace():
+    assert List("hello").replace("e", "a") == "hallo"
+    assert List("hello").replace("l", "y") == "heyyo"
+    assert List("hello").replace("el", "q") == "hello"
+    assert List("").replace("el", "q") == ""
+    assert List.nones().replace(None, "a")[:10] == ["a"] * 10
+    assert List.nones().replace(None, "a", maxcount=3)[:10] == ["a"] * 3 + [None] * 7
 
     # ensure lazy
     generator_executed = False
@@ -262,7 +262,7 @@ def test_replace_instances():
         nonlocal generator_executed
         generator_executed = True
 
-    assert "".join(List(generator()).replace_instances("l", "y")[:4]) == "heyy"
+    assert "".join(List(generator()).replace("l", "y")[:4]) == "heyy"
     assert not generator_executed
 
 

@@ -297,7 +297,7 @@ class List:
                 yield i
 
     @_wrap
-    def replace(self, pattern, replacement, maxcount=-1):
+    def replace_substrings(self, pattern, replacement, maxcount=-1):
         # fast paths
         if self is pattern:
             yield from replacement
@@ -321,7 +321,7 @@ class List:
         yield from self[prev:]
 
     @_wrap
-    def replace_instances(self, find, replacement, maxcount=-1):
+    def replace(self, find, replacement, maxcount=-1):
         if find is replacement:
             yield from self
             return 0
