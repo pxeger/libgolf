@@ -304,6 +304,17 @@ class List:
             yield from i
 
     @_wrap
+    def flat(self, maxdepth=-1):
+        if maxdepth == 0:
+            yield from self
+            return
+        for i in self:
+            if isinstance(i, List):
+                yield from i.flat(maxdepth - 1)
+            else:
+                yield i
+
+    @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
         pattern = type(self)(pattern)

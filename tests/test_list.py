@@ -258,6 +258,12 @@ def test_chain():
     assert List.chain("hello", "there", "", "!") == "hellothere!"
 
 
+def test_flat():
+    assert List([1, List(), 3, List([6, 7]), 2, 4, List([List([8]), List([5, 9])])]).flat() == [1, 3, 6, 7, 2, 4, 8, 5, 9]
+    assert List([1, List(), 3, List([6, 7]), 2, 4, List([List([8]), List([5, 9])])]).flat(maxdepth=2) == [1, 3, 6, 7, 2, 4, 8, 5, 9]
+    assert List([1, List(), 3, List([6, 7]), 2, 4, List([List([8]), List([5, 9])])]).flat(maxdepth=1) == [1, 3, 6, 7, 2, 4, (8,), (5, 9)]
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]
