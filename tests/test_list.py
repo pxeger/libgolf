@@ -239,6 +239,20 @@ def test_prepend():
     assert not generator_executed
 
 
+def test_extend():
+    assert List("hello").extend(", world") == "hello, world"
+
+    # ensure lazy
+    generator_executed = set()
+
+    def generator(s):
+        yield from s
+        generator_executed.add(s)
+
+    assert List(generator("hello")).extend(generator(", world"))[:12] == "hello, world"
+    assert generator_executed == {"hello"}
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]
