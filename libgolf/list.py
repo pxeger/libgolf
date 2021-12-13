@@ -270,6 +270,14 @@ class List:
         return True
 
     @_wrap
+    def substitute(self, target_index, replacement):
+        for i, x in enumerate(self):
+            if i == target_index:
+                yield replacement
+            else:
+                yield x
+
+    @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
         pattern = type(self)(pattern)

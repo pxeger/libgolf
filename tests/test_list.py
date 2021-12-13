@@ -176,6 +176,23 @@ def test_nones():
     assert all(next(l) is None for _ in range(100))
 
 
+def test_substitute():
+    assert List("abcdef").substitute(4, "q") == "abcdqf"
+    assert List("abcdef").substitute(9, "q") == "abcdef"
+    assert List().substitute(0, "x") == ()
+
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        yield from "hello"
+        nonlocal generator_executed
+        generator_executed = True
+
+    assert List(generator()).substitute(3, "x")[:5] == "helxo"
+    assert not generator_executed
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]
