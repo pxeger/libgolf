@@ -253,6 +253,11 @@ def test_extend():
     assert generator_executed == {"hello"}
 
 
+def test_chain():
+    assert List.chain() == ()
+    assert List.chain("hello", "there", "", "!") == "hellothere!"
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]

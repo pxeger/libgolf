@@ -298,6 +298,11 @@ class List:
         yield from self
         yield from other
 
+    @_classmethod_wrap
+    def chain(*iterables):
+        for i in iterables:
+            yield from i
+
     @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
