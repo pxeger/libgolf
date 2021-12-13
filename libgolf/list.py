@@ -284,6 +284,11 @@ class List:
         yield from self[index:]
 
     @_wrap
+    def append(self, value):
+        yield from self
+        yield value
+
+    @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
         pattern = type(self)(pattern)
