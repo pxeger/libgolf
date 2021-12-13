@@ -15,6 +15,8 @@ class Character(str):
 
 
 class String(List):
+    _HASH = 0x9f6366ef3114f318
+
     def __init__(self, arg=()):
         super().__init__(Character(c) for c in arg)
 

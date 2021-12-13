@@ -37,3 +37,7 @@ def test_string():
 
     assert repr(String("hello")) == "'hello'"
     assert type(repr(String("hello"))) is str is not String
+
+
+def test_hash():
+    assert hash(String("hello")) != hash(List("hello"))
