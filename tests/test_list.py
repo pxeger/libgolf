@@ -193,6 +193,22 @@ def test_substitute():
     assert not generator_executed
 
 
+def test_insert():
+    assert List("abcdef").insert(0, "q") == "qabcdef"
+    assert List("abcdef").insert(5, "q") == "abcdeqf"
+
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        yield from "hello"
+        nonlocal generator_executed
+        generator_executed = True
+
+    assert List(generator()).insert(4, "x")[:6] == "hellxo"
+    assert not generator_executed
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]

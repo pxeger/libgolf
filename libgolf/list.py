@@ -278,6 +278,12 @@ class List:
                 yield x
 
     @_wrap
+    def insert(self, index, value):
+        yield from self[:index]
+        yield value
+        yield from self[index:]
+
+    @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
         pattern = type(self)(pattern)
