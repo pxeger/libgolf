@@ -1,8 +1,8 @@
 name: Publish to PyPI
 
 on:
-  release:
-    types: [published]
+  push:
+    tags: ['*']
 
 jobs:
   publish:
@@ -17,10 +17,13 @@ jobs:
           pip install --upgrade pip poetry
           poetry install
       - name: Build
-        run: |
-          poetry build
+        run: poetry build
       - name: Upload to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
+      - name: Create GitHub release
+        run: gh release create $GITHUB_REF dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
