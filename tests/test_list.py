@@ -168,6 +168,15 @@ def test_lazy_length_compare():
     assert generator_executed
 
 
+def test_repeat():
+    assert isinstance(List.repeat("hi", 10), List)
+    assert list(List.repeat("hi", 10)) == ["hi"] * 10
+    x = object()
+    # -1 means infinite
+    l = iter(List.repeat(x, -1))
+    assert all(next(l) is x for _ in range(100))
+
+
 def test_nones():
     assert isinstance(List.nones(10), List)
     assert list(List.nones(10)) == [None] * 10

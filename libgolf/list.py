@@ -79,14 +79,18 @@ class List:
     def length_compare_int(self, n: int):
         return self.length_compare_length(self.nones(n))
 
+    @classmethod
+    def nones(cls, length=-1):
+        return cls.repeat(None, length)
+
     @_classmethod_wrap
-    def nones(length=-1):
+    def repeat(value, length=-1):
         if length < 0:
             while True:
-                yield None
+                yield value
         else:
             for _ in range(length):
-                yield None
+                yield value
 
     def __repr__(self):
         return repr(list(self))
