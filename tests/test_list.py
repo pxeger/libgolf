@@ -273,6 +273,22 @@ def test_flat():
     assert List([1, List(), 3, List([6, 7]), 2, 4, List([List([8]), List([5, 9])])]).flat(maxdepth=1) == [1, 3, 6, 7, 2, 4, (8,), (5, 9)]
 
 
+def test_prefixes():
+    assert List("hello").prefixes(include_empty=False) == ["h", "he", "hel", "hell", "hello"]
+    assert List("hello").prefixes(include_empty=True) == ["", "h", "he", "hel", "hell", "hello"]
+
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        yield from "hello"
+        nonlocal generator_executed
+        generator_executed = True
+
+    assert list(islice(List("hello").prefixes(False), 5)) == ["h", "he", "hel", "hell", "hello"]
+    assert not generator_executed
+
+
 def test_find_substrings():
     assert List("hello").find_substrings("el") == [1]
     assert List("hello").find_substrings("l") == [2, 3]

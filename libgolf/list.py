@@ -319,6 +319,16 @@ class List:
                 yield i
 
     @_wrap
+    def prefixes(self, include_empty: bool):
+        if include_empty:
+            yield List()
+
+        length = 0
+        for item in self:
+            length += 1
+            yield List(item for _, item in zip(range(length), self))
+
+    @_wrap
     def find_substrings(self, pattern):
         # naïve substring search, Θ(mn), but it's not easy to get better when you have to be lazy
         pattern = type(self)(pattern)
