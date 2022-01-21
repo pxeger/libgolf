@@ -92,6 +92,9 @@ class List:
             for _ in range(length):
                 yield value
 
+    def __bool__(self):
+        return self.length_compare_int(0) > 0
+
     def __repr__(self):
         return repr(list(self))
 

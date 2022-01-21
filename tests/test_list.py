@@ -473,6 +473,26 @@ def test_combinations():
     assert not generator_executed
 
 
+def test_bool():
+    assert bool(List()) is False
+    assert bool(List("abc")) is True
+    assert bool(List([False])) is True
+
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        yield from "a"
+        nonlocal generator_executed
+        generator_executed = True
+        yield from "bc"
+
+    assert bool(List(generator())) is True
+    assert not generator_executed
+
+    assert bool(List.nones()) is True
+
+
 def test_hash():
     l = List("abc")
     l2 = List("def")
