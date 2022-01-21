@@ -126,6 +126,39 @@ def test_slice():
     assert l[-2::-2] == [8, 6, 4, 2, 0]
     assert l[1::-2] == [1]
 
+    # ensure lazy
+    generator_executed = False
+
+    def generator():
+        nonlocal generator_executed
+        yield from range(10)
+        generator_executed = True
+
+    assert List(generator())[:10] == range(10)
+    assert not generator_executed
+    assert List(generator())[:11] == range(10)
+    assert generator_executed
+    generator_executed = False
+    assert List(generator())[:][:10] == range(10)
+    assert not generator_executed
+    assert List(generator())[:] == range(10)
+    assert generator_executed
+
+    # ensure lazy even from the beginning
+    generator_executed = False
+
+    def generator():
+        nonlocal generator_executed
+        generator_executed = True
+        yield from range(10)
+
+    # don't evaluate
+    List(generator())[:]
+    List(generator())[-1:]
+    List(generator())[:-1]
+    List(generator())[::-1]
+    assert not generator_executed
+
 
 def test_reversed():
     assert list(reversed(List(range(10)))) == list(reversed(range(10)))

@@ -139,9 +139,9 @@ class List:
         if s.step is not None and s.step < 0:
             # since we have to enumerate all elements anyway, there's no better way than with exhaust
             self.exhaust()
-            return self.cache[s]
+            yield from self.cache[s]
         else:
-            return itertools.islice(self, s.start, s.stop, s.step)
+            yield from itertools.islice(self, s.start, s.stop, s.step)
 
     # comparison operators are always as lazy as possible
 
