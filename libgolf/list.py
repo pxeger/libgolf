@@ -453,3 +453,9 @@ class List:
                 if result_index == size:
                     yield List(result)
                     break
+
+    @_classmethod_wrap
+    def count(n: int = 0):
+        while True:
+            yield n
+            n += 1

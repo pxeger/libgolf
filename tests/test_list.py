@@ -510,3 +510,8 @@ def test_hash():
     l3 = List("abc")
     l3.exhaust()
     assert hash(l) == hash(l3)
+
+
+def test_count():
+    assert List.count()[:100] == range(100)
+    assert List.count(1)[:100] == range(1, 101)
