@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libgolf"
-version = "0.0.2"
+version = "0.0.3"
 description = "Common utilities for implementing golfing language builtin libraries"
 authors = ["pxeger <_@pxeger.com>"]
 license = "Artistic License 2.0"
