@@ -454,6 +454,15 @@ class List:
                     yield List(result)
                     break
 
+    @_wrap
+    def powerset(self):
+        yield List()
+        acc = [List()]
+        for x in self:
+            new = [a.append(x) for a in acc]
+            yield from new
+            acc += new
+
     @_classmethod_wrap
     def count(n: int = 0):
         while True:

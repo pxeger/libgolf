@@ -515,3 +515,27 @@ def test_hash():
 def test_count():
     assert List.count()[:100] == range(100)
     assert List.count(1)[:100] == range(1, 101)
+
+
+def test_powerset():
+    assert List().powerset() == [[]]
+    assert List((1,)).powerset() == [[], [1]]
+    assert List(range(4)).powerset() == [[], [0], [1], [0, 1], [2], [0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+
+    # ensure lazy
+    generator_executed = 0
+
+    def generator():
+        nonlocal generator_executed
+        for generator_executed in range(1, 5):
+            yield generator_executed
+
+    o = List(generator()).powerset()
+    assert o[0] == []
+    assert generator_executed == 0
+    assert o[:2] == [[], [1]]
+    assert generator_executed == 1
+    assert o[:8] == [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+    assert generator_executed == 3
+    o.exhaust()
+    assert generator_executed == 4
