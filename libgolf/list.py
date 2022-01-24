@@ -465,7 +465,8 @@ class List:
             acc += new
 
     @_classmethod_wrap
-    def count(n: int = 0):
+    def integers(start: int = 0):
+        n = start
         while True:
             yield n
             n += 1

@@ -528,9 +528,9 @@ def test_hash():
     assert hash(l) == hash(l3)
 
 
-def test_count():
-    assert List.count()[:100] == range(100)
-    assert List.count(1)[:100] == range(1, 101)
+def test_integers():
+    assert List.integers()[:100] == range(100)
+    assert List.integers(1)[:100] == range(1, 101)
 
 
 def test_powerset():
