@@ -56,6 +56,7 @@ class List:
         if not self.finished:
             self.cache.extend(self.it)
             self.finished = True
+        return self
 
     def __reversed__(self):
         self.exhaust()

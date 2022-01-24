@@ -41,6 +41,22 @@ def test_lazy():
     assert generator_executed
 
 
+def test_exhaust():
+    generator_executed = False
+    def generator():
+        nonlocal generator_executed
+        yield from "hello"
+        generator_executed = True
+
+    l = List(generator())
+    assert l[:5] == "hello"
+    assert not generator_executed
+    assert not l.finished
+    assert l.exhaust() is l
+    assert generator_executed
+    assert l.finished
+
+
 def test_compare():
     for op in (
         (lambda x, y: x < y),
