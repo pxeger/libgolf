@@ -31,6 +31,9 @@ class String(List):
     def __repr__(self):
         return repr(str(self))
 
+    def __ascii__(self):
+        return ascii(str(self))
+
     @List._wrap
     def lower(self):
         return (c.lower() for c in self)

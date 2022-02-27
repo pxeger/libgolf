@@ -19,6 +19,7 @@ def test_character():
     assert repr(Character("a")) == "'a'"
     assert str(Character("a")) == "a"
     assert type(str(Character)) is str is not Character
+    assert ascii(Character("☭")) == ascii("☭")
 
     for x in ["abc", "", -1, 0x10FFFF + 1]:
         with pytest.raises(ValueError):
