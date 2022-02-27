@@ -13,6 +13,11 @@ class Character(str):
     def __int__(self):
         return ord(self)
 
+    def __add__(self, other):
+        return NotImplemented
+
+    __mul__ = __rmul__ = __radd__ = __mod__ = __add__
+
 
 class String(List):
     _HASH = 0x9f6366ef3114f318

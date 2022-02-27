@@ -24,6 +24,18 @@ def test_character():
         with pytest.raises(ValueError):
             Character(x)
 
+    # operator overloads
+    with pytest.raises(TypeError):
+        Character("a") + Character("b")
+    with pytest.raises(TypeError):
+        Character("a") + "b"
+    with pytest.raises(TypeError):
+        Character("a") * 2
+    with pytest.raises(TypeError):
+        2 * Character("a")
+    with pytest.raises(TypeError):
+        Character("a") % ()
+
 
 def test_string():
     assert issubclass(String, List)
