@@ -50,6 +50,9 @@ def test_string():
     assert repr(String("hello")) == "'hello'"
     assert type(repr(String("hello"))) is str is not String
 
+    assert String("Hello").upper() == "HELLO"
+    assert String("Hello").lower() == "hello"
+
 
 def test_hash():
     assert hash(String("hello")) != hash(List("hello"))

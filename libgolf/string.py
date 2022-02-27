@@ -30,3 +30,11 @@ class String(List):
 
     def __repr__(self):
         return repr(str(self))
+
+    @List._wrap
+    def lower(self):
+        return (c.lower() for c in self)
+
+    @List._wrap
+    def upper(self):
+        return (c.upper() for c in self)
