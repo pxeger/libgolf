@@ -555,3 +555,35 @@ def test_powerset():
     assert generator_executed == 3
     o.exhaust()
     assert generator_executed == 4
+
+
+def test_strip():
+    assert List("aaa").lstrip("a") == ""
+    assert List("").lstrip("a") == ""
+    assert List("aaa").lstrip("b") == "aaa"
+    assert List("aba").lstrip("a") == "ba"
+    assert List("bab").lstrip("a") == "bab"
+    assert List("abbacab").lstrip(("a", "b")) == "cab"
+    assert List("abc").lstrip(()) == "abc"
+    assert List("abc").lstrip(("ab", "a")) == "bc"
+    assert List("abc").lstrip(("",)) == "abc"
+
+    assert List("aaa").rstrip("a") == ""
+    assert List("").rstrip("a") == ""
+    assert List("aaa").rstrip("b") == "aaa"
+    assert List("aba").rstrip("a") == "ab"
+    assert List("bab").rstrip("a") == "bab"
+    assert List("bacabba").rstrip(("a", "b")) == "bac"
+    assert List("abc").rstrip(()) == "abc"
+    assert List("abc").rstrip(("bc", "c")) == "ab"
+    assert List("abc").rstrip(("",)) == "abc"
+
+    assert List("aaa").strip("a") == ""
+    assert List("").strip("a") == ""
+    assert List("aaa").strip("b") == "aaa"
+    assert List("aba").strip("a") == "b"
+    assert List("bab").strip("a") == "bab"
+    assert List("bacabba").strip(("a", "b")) == "c"
+    assert List("abc").strip(()) == "abc"
+    assert List("abc").strip(("ab", "a")) == "bc"
+    assert List("abc").strip(("bc", "c")) == "ab"

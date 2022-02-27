@@ -470,3 +470,20 @@ class List:
         while True:
             yield n
             n += 1
+
+    @_wrap
+    def lstrip(self, remove):
+        start = True
+        for item in self:
+            if start:
+                if item in remove:
+                    continue
+                else:
+                    start = False
+            yield item
+
+    def rstrip(self, remove):
+        return reversed(reversed(self).lstrip(remove))
+
+    def strip(self, remove):
+        return self.lstrip(remove).rstrip(remove)
