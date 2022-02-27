@@ -37,6 +37,9 @@ def test_character():
     with pytest.raises(TypeError):
         Character("a") % ()
 
+    s = String("hello")
+    assert f"{s:8}" == "hello   "
+
 
 def test_string():
     assert issubclass(String, List)

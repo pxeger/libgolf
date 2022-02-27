@@ -34,6 +34,9 @@ class String(List):
     def __ascii__(self):
         return ascii(str(self))
 
+    def __format__(self, spec):
+        return format(str(self), spec)
+
     @List._wrap
     def lower(self):
         return (c.lower() for c in self)
