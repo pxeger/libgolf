@@ -587,3 +587,12 @@ def test_strip():
     assert List("abc").strip(()) == "abc"
     assert List("abc").strip(("ab", "a")) == "bc"
     assert List("abc").strip(("bc", "c")) == "ab"
+
+
+def test_loop():
+    assert List("abc").loop()[:10] == "abcabcabca"
+
+
+def test_split():
+    assert List("abcd").split("b") == ("a", "cd")
+    assert List("abcd").split("b") == ("a", "cd")

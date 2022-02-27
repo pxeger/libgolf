@@ -134,10 +134,6 @@ class List:
                 next(i)
             return next(i)
 
-    def _loop(self):
-        while True:
-            yield from self
-
     @_wrap
     def _slice(self, s):
         if s.step is not None and s.step < 0:
@@ -146,6 +142,12 @@ class List:
             yield from self.cache[s]
         else:
             yield from itertools.islice(self, s.start, s.stop, s.step)
+
+    def _loop(self):
+        while True:
+            yield from self
+
+    loop = _wrap(_loop)
 
     # comparison operators are always as lazy as possible
 
@@ -487,3 +489,22 @@ class List:
 
     def strip(self, remove):
         return self.lstrip(remove).rstrip(remove)
+
+    @_wrap
+    def split(self, delimiters):
+        cls = type(self)
+        it = iter(self)
+        done = False
+
+        def g():
+            nonlocal done
+            for item in it:
+                if item in delimiters:
+                    break
+                else:
+                    yield item
+            else:
+                done = True
+
+        while not done:
+            yield cls(g())
